@@ -4,13 +4,15 @@ Gym Trainer is a responsive fitness web application that builds practical workou
 
 Workout programs are generated using a deterministic rule-based algorithm, not AI.
 
+> This repository page may contain the project as a ZIP archive. Extract the archive before running the application. All source code and technical documentation are included inside it.
+
 ## Overview
 
 Many people want a workout program that fits their actual equipment, schedule, experience, and training priorities without manually assembling a routine from hundreds of exercises. Gym Trainer turns a short onboarding flow into a structured weekly program and then supports workout logging and progress tracking.
 
 The core engineering feature is the workout generator. It filters invalid exercises first, scores only eligible exercises, selects an appropriate weekly split, assembles each session, estimates session duration, validates the final plan, and produces a human-readable reason for every selected exercise.
 
-Version 1.3 adds priority-based body-map color intensity, 1-7 training days, and automatic embedded YouTube technique-video resolution across the full exercise library while keeping the same visual identity. See [docs/UPDATES.md](docs/UPDATES.md).
+Version 1.3 adds priority-based body-map color intensity, 1-7 training days, and automatic embedded YouTube technique-video resolution across the full exercise library while keeping the same visual identity.
 
 ## Features
 
@@ -79,7 +81,7 @@ Hard constraints are applied before scoring. An exercise cannot be selected when
 
 The generator is deterministic. The same profile, exercise database, and generator version produce the same plan. A small deterministic day-variation factor prevents repeated full-body days from being identical while preserving reproducibility.
 
-Detailed generator documentation is available in [docs/GENERATOR.md](docs/GENERATOR.md).
+The generator is implemented as a separate domain layer so its rules can be inspected and tested independently from the UI.
 
 ## Architecture
 
@@ -115,7 +117,7 @@ Data layer
 
 The workout generator is separated from React components and can be unit-tested independently. The browser MVP stores the current profile, generated plan, workout sessions, and appearance preference locally so the complete core flow can run without authentication. The repository also contains the normalized PostgreSQL/Prisma schema and seed pipeline intended for persistent user accounts.
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the complete design.
+The full technical documentation is included inside the project archive in the `docs` folder.
 
 ## Data Model
 
@@ -221,13 +223,25 @@ docs/
 - npm
 - Docker Desktop or another PostgreSQL installation if you want to use the Prisma database layer
 
-### 1. Install dependencies
+### 1. Extract the project
+
+Extract the ZIP archive and open the `gym-trainer` folder in Visual Studio, VS Code, or a terminal.
+
+### 2. Install dependencies
+
+On Windows PowerShell:
+
+```powershell
+npm.cmd install
+```
+
+On Command Prompt, macOS, or Linux:
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment variables
+### 3. Configure environment variables
 
 ```bash
 cp .env.example .env
@@ -235,31 +249,39 @@ cp .env.example .env
 
 The default `.env.example` matches the included Docker PostgreSQL service.
 
-### 3. Start PostgreSQL
+### 4. Start PostgreSQL
 
 ```bash
 docker compose up -d
 ```
 
-### 4. Generate the Prisma client
+### 5. Generate the Prisma client
 
 ```bash
 npm run db:generate
 ```
 
-### 5. Create the database migration
+### 6. Create the database migration
 
 ```bash
 npm run db:migrate -- --name init
 ```
 
-### 6. Seed the curated database
+### 7. Seed the curated database
 
 ```bash
 npm run db:seed
 ```
 
-### 7. Start the application
+### 8. Start the application
+
+On Windows PowerShell:
+
+```powershell
+npm.cmd run dev
+```
+
+On Command Prompt, macOS, or Linux:
 
 ```bash
 npm run dev
@@ -291,7 +313,7 @@ npm run db:studio
 npm run db:deploy
 ```
 
-See [docs/DATABASE.md](docs/DATABASE.md).
+Database documentation is included inside the project archive in `docs/DATABASE.md`.
 
 ## Seed Data
 
@@ -325,7 +347,7 @@ npm run typecheck:core
 
 The tests cover equipment constraints, deterministic generation, frequency splits, duration differences, beginner difficulty rules, database coverage scenarios, and progression recommendations.
 
-See [docs/TESTING.md](docs/TESTING.md).
+Testing documentation is included inside the project archive in `docs/TESTING.md`.
 
 ## Engineering Decisions
 
@@ -357,7 +379,7 @@ The UI uses semantic buttons and inputs, visible focus states, text labels, non-
 
 The recommended deployment is Vercel for the Next.js application and a managed PostgreSQL provider for the database.
 
-Deployment instructions are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+Deployment instructions are included inside the project archive in `docs/DEPLOYMENT.md`.
 
 ## Roadmap
 
@@ -392,17 +414,21 @@ AI coaching, nutrition tracking, social features, payments, and medical recommen
 
 ## Documentation
 
-- [Architecture](docs/ARCHITECTURE.md)
-- [Workout Generator](docs/GENERATOR.md)
-- [Database](docs/DATABASE.md)
-- [Exercise Dataset](docs/DATASET.md)
-- [Testing](docs/TESTING.md)
-- [Development Guide](docs/DEVELOPMENT.md)
-- [Dependency Rationale](docs/DEPENDENCIES.md)
-- [Deployment](docs/DEPLOYMENT.md)
-- [Product Scope](docs/PRODUCT.md)
-- [Video Sources](docs/VIDEO_SOURCES.md)
-- [Original Development Specification](docs/SPECIFICATION.txt)
+The ZIP archive includes a complete `docs` folder with:
+
+- Architecture
+- Workout generator design
+- Database design
+- Exercise dataset notes
+- Testing strategy
+- Development guide
+- Dependency rationale
+- Deployment guide
+- Product scope
+- Video-source notes
+- Original development specification
+
+These files are kept inside the archive so the README remains usable even when the project is uploaded as a single ZIP file.
 
 ## Exercise videos
 
